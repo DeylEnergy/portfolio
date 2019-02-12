@@ -19,7 +19,7 @@ body {
 }
 
 #home {
-  background-image: url(/img/bg-dawn-min.jpg);
+  background-image: url(https://raw.githubusercontent.com/DeylRaytop/portfolio/master/img/bg-dawn-min.jpg);
   background-position: center center;
   background-attachment: fixed;
   background-size: cover;
