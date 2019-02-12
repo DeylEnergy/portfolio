@@ -141,21 +141,21 @@ nav {
 
 	&__top {
 		@include line(0);
+		&--change {
+			transform: rotate(-45deg) translate(-12px, 7px);
+		}
 	}
 	&__middle {
 		@include line(7px);
+		&--change {
+			opacity: 0;
+		}
 	}
 	&__bottom {
 		@include line(7px);
-	}
-	.change &__top {
-		transform: rotate(-45deg) translate(-12px, 7px);
-	}
-	.change &__middle {
-		opacity: 0;
-	}
-	.change &__bottom {
-		transform: rotate(45deg) translate(-10px, -5px);
+		&--change {
+			transform: rotate(45deg) translate(-10px, -5px);
+		}
 	}
 }
 p {
