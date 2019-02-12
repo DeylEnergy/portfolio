@@ -9,7 +9,14 @@
 	const collapse = getFirstElementOfClass('collapse');
 	collapse.onclick = () => {
 		const menu = getFirstElementOfClass('mnavigation');
+		const collapseTop = getFirstElementOfClass('collapse__top');
+		const collapseMiddle = getFirstElementOfClass('collapse__middle');
+		const collapseBottom = getFirstElementOfClass('collapse__bottom');
+
 		menu.classList.toggle('mnavigation--disappear');
+		collapseTop.classList.toggle('collapse__top--change');
+		collapseMiddle.classList.toggle('collapse__middle--change');
+		collapseBottom.classList.toggle('collapse__bottom--change');
 	};
 
 	const model = [
