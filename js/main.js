@@ -128,44 +128,7 @@
 	// DATA FETCHING
 	const fetchTheContent = id => model.filter(x => x.id === id)[0];
 
-	// Applies when 'next/prev-btn' was clicked
-	const switchImage = trigger => {
-		const container = getFirstElementOfClass('modal__container');
-
-		const otherPhoto = direction => {
-			const btn = 'modal__container';
-			container.classList.add(`${btn}--switch-${direction}`);
-			// move to direction
-			setTimeout(() => {
-				container.classList.remove(`${btn}--visible`);
-			}, 400);
-
-			// move to the opposite
-			setTimeout(() => {
-				container.classList.remove(`${btn}--switch-${direction}`);
-				container.classList.add(`${btn}--switch-${direction}-on-opposite`);
-			}, 600);
-
-			// return to original place
-			setTimeout(() => {
-				container.classList.add(`${btn}--visible`);
-				container.classList.remove(`${btn}--switch-${direction}-on-opposite`);
-				container.classList.add(`${btn}--default-place`);
-			}, 850);
-
-			setTimeout(() => {
-				container.classList.remove(`${btn}--default-place`);
-			}, 1000);
-		};
-
-		if (trigger === 'prev') {
-			otherPhoto('right');
-		} else if (trigger === 'next') {
-			otherPhoto('left');
-		}
-	};
-
-	const insertTheData = (work, trigger) => {
+	const insertTheData = (work) => {
 		const { imgSrc, imgAlt, desc, projectUrl, prevId, nextId } = work;
 
 		// setup references to elements
@@ -175,17 +138,7 @@
 		const prevBtn = getFirstElementOfClass('modal__prev-btn');
 		const nextBtn = getFirstElementOfClass('modal__next-btn');
 
-		if (trigger) {
-			// image switching effect
-			switchImage(trigger);
-
-			// change image "behind the scenes"
-			setTimeout(() => {
-				modalImg.src = imgSrc;
-			}, 800);
-		} else {
-			modalImg.src = imgSrc;
-		}
+		modalImg.src = imgSrc;
 
 		// modifying elements
 		modalImg.alt = imgAlt;
@@ -215,11 +168,7 @@
 	// MANIPULATE WITHIN MODAL
 	function manipulate(id) {
 		const work = fetchTheContent(id);
-
-		// if the function was invoked by prev/next button
-		const trigger = this !== window ? this.trigger : null;
-
-		insertTheData(work, trigger);
+		insertTheData(work);
 	}
 
 	// Extracts surface id
@@ -240,13 +189,17 @@
 
 	// next/prev button handler
 	function switchButtonAction() {
-		const { visit, movement } = this.dataset;
+		const { visit } = this.dataset;
 		const id = parseInt(visit, 10);
-		const trigger = movement;
 
 		// in case there is an image toward the direction
 		if (id || id === 0) {
-			manipulate.call({ trigger }, id);
+			const container = getFirstElementOfClass('modal__container');
+			container.classList.toggle('modal__container--visible');
+			setTimeout(() => {
+				manipulate(id);
+				container.classList.toggle('modal__container--visible');
+			}, 700);
 		}
 	}
 
